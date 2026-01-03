@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shaanko — The Bridge to Secure Digital Trading</title>
+<meta name="description" content="Shaanko: The secure bridge for buying, selling and trading digital goods in Bangladesh." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-dark: #020617;
+    --bg-card: #0f172a;
+    --primary: #38bdf8; /* Sky blue */
+    --secondary: #818cf8; /* Indigo */
+    --accent: #2dd4bf; /* Teal */
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --glass: rgba(30, 41, 59, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glow: 0 0 80px -20px rgba(56, 189, 248, 0.15);
+    --radius: 20px;
+    --max-width: 1140px;
+  }
+
+  *{box-sizing:border-box}
+  
+  html{scroll-behavior: smooth;}
+  
+  body{
+    margin:0;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  a { text-decoration: none; transition: 0.3s ease; }
+  ul { list-style: none; padding: 0; margin: 0; }
+
+  /* Utilities */
+  .container{max-width:var(--max-width);margin:0 auto;padding:0 24px;}
+  .text-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .muted { color: var(--text-muted); font-size: 0.95rem; }
+  .badge {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  /* Components */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-size: 15px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #0f172a;
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4); }
+  
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+  }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: rgba(56, 189, 248, 0.05); }
+
+  .card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.15); }
+  
+  /* Header */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 16px 0;
+  }
+  .nav-wrapper { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 12px;}
+  .logo img { height: 56px; border-radius: 4px; }
+  .logo span { color: var(--text-main); }
+  
+  nav { display: flex; gap: 24px; align-items: center; }
+  nav a { color: var(--text-muted); font-size: 14px; font-weight: 500; }
+  nav a:hover { color: var(--primary); }
+  
+  /* Hero */
+  .hero-section { padding: 140px 0 80px; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+  .hero-content h1 { font-size: clamp(40px, 5vw, 64px); font-weight: 700; margin-bottom: 24px; letter-spacing: -1px; }
+  .hero-content p { font-size: 18px; color: var(--text-muted); margin-bottom: 32px; max-width: 500px; }
+  .hero-actions { display: flex; gap: 16px; }
+
+  /* 3D Phone Mockup Container */
+  .phone-mockup {
+    position: relative;
+    z-index: 2;
+    transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+    transition: transform 0.5s ease;
+  }
+  .phone-mockup:hover { transform: perspective(1000px) rotateY(0deg) rotateX(0deg); }
+  .phone-frame {
+    border: 8px solid #1e293b;
+    border-radius: 40px;
+    overflow: hidden;
+    background: #0f172a;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-width: 320px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Internal App UI Styles */
+  .app-screen { 
+    padding: 0; 
+    background: #fdfdfd;
+    height: 600px; 
+    display: flex; 
+    flex-direction: column; 
+    color: #1f2937;
+    position: relative;
+    overflow-y: auto;
+  }
+  
+  .app-content { padding: 20px 20px 80px 20px; }
+
+  /* App Header */
+  .app-header-row { display: flex; align-items: center; margin-top: 10px; margin-bottom: 20px; }
+  .back-btn-icon { font-size: 24px; cursor: pointer; color: #374151; margin-right: 15px; }
+  .app-title { flex: 1; text-align: center; font-size: 18px; font-weight: 600; margin-right: 24px; color: #111; }
+
+  /* App Profile */
+  .profile-section { display: flex; align-items: center; margin-bottom: 24px; gap: 12px; }
+  .profile-avatar {
+    width: 70px; height: 70px; background: #f3f4f6; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 700; color: #333;
+  }
+  .profile-info h2 { font-size: 18px; font-weight: 700; margin: 0 0 4px 0; color: #111; }
+  .status-row { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 4px; }
+  .not-verified { color: #f97316; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+  .verification-icons { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #666; margin-bottom: 4px; }
+  .v-item { display: flex; align-items: center; gap: 3px; }
+  .v-item.red { color: #ef4444; }
+  .v-item.green { color: #22c55e; }
+  .rec-row { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #666; }
+  
+  /* App Buttons */
+  .app-actions { display: flex; gap: 10px; margin-bottom: 24px; }
+  .app-btn { flex: 1; padding: 10px; border-radius: 20px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; text-align: center; }
+  .app-btn-dash { background: #f97316; color: white; }
+  .app-btn-set { background: #f3f4f6; color: #374151; }
+
+  /* App Stats Card */
+  .green-card {
+    background: #ecfdf5; border: 1px solid #d1fae5; border-radius: 12px; padding: 16px;
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+  }
+  .gc-left { display: flex; align-items: center; gap: 12px; }
+  .swap-icon-circle { width: 40px; height: 40px; background: #4ade80; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
+  .gc-text h3 { margin: 0; font-size: 24px; font-weight: 700; color: #064e3b; line-height: 1; }
+  .gc-text span { font-size: 12px; font-weight: 500; color: #1f2937; }
+
+  /* App Stats Grid */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .stat-box { background: #fff; border: 1px solid #f3f4f6; border-radius: 12px; padding: 12px 5px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .stat-box h4 { font-size: 18px; font-weight: 700; margin: 0 0 2px 0; color: #111; }
+  .stat-box span { font-size: 11px; color: #6b7280; }
+
+  /* App Nav Bar */
+  .app-nav-bar {
+    position: absolute; bottom: 0; left: 0; width: 100%; background: white;
+    border-top: 1px solid #f3f4f6; padding: 10px 0 16px; display: flex; justify-content: space-around;
+  }
+  .app-nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #9ca3af; gap: 3px; }
+  .app-nav-item.active { color: #3b82f6; }
+
+
+  /* Sections General */
+  section { padding: 80px 0; position: relative; }
+  .section-header { margin-bottom: 40px; }
+  .section-header h2 { font-size: 32px; margin-bottom: 12px; }
+  
+  /* Bento Grid Layouts */
+  .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .bento-full { grid-column: span 2; }
+  
+  /* Solution & Users */
+  .solution-card { background: linear-gradient(145deg, rgba(56, 189, 248, 0.05), transparent); }
+  .users-card { background: linear-gradient(145deg, rgba(129, 140, 248, 0.05), transparent); }
+  .feature-list li { margin-bottom: 10px; display: flex; gap: 10px; align-items: center; color: var(--text-muted); font-size: 15px; }
+  .feature-list li::before { content: "✓"; color: var(--accent); font-weight: bold; }
+
+  /* Revenue Table */
+  .revenue-table { width: 100%; border-collapse: separate; border-spacing: 0 12px; }
+  .revenue-table td { padding: 16px; background: rgba(255,255,255,0.02); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+  .revenue-table td:first-child { border-left: 1px solid var(--glass-border); border-radius: 12px 0 0 12px; font-weight: 600; color: var(--primary); }
+  .revenue-table td:last-child { border-right: 1px solid var(--glass-border); border-radius: 0 12px 12px 0; color: var(--text-muted); }
+  
+  /* Progress & Roadmap Split */
+  .roadmap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .timeline-item { position: relative; padding-left: 24px; margin-bottom: 24px; border-left: 2px solid var(--glass-border); }
+  .timeline-item::before { content: ''; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+  .timeline-item.future::before { background: var(--text-muted); box-shadow: none; }
+  
+  /* Founders */
+  .founders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
+  .founder-card { display: flex; align-items: center; gap: 20px; }
+  .avatar { width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; color: #020617; flex-shrink: 0; }
+  
+  .linkedin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: rgba(0, 119, 181, 0.1);
+    color: #38bdf8;
+    border: 1px solid rgba(0, 119, 181, 0.3);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .linkedin-btn:hover {
+    background: rgba(0, 119, 181, 0.2);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Contact */
+  .contact-box { text-align: center; max-width: 600px; margin: 0 auto; padding: 48px; background: linear-gradient(180deg, var(--glass) 0%, rgba(2,6,23,0) 100%); }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-actions { justify-content: center; }
+    .hero-content p { margin: 0 auto 32px; }
+    .phone-mockup { margin-top: 40px; transform: none; }
+    .phone-mockup:hover { transform: none; }
+    .bento-grid, .roadmap-grid { grid-template-columns: 1fr; }
+    .bento-full { grid-column: span 1; }
+    nav { display: none; } /* Simplified for mobile */
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrapper">
+    <div class="logo">
+      <a href="#" style="display: block;">
+        <img src="shaanko_logo.jpg" alt="Shaanko Logo">
+      </a>
+      </div>
+    <nav>
+      <a href="#mission">Mission</a>
+      <a href="#revenue">Revenue</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#contact" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-section">
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <div class="badge">Next Gen Marketplace</div>
+      <h1>The Bridge to <span class="text-gradient">Secure</span><br> Digital Trading.</h1>
+      <p>Shaanko (meaning "Bridge") connects buyers and sellers of digital goods in Bangladesh through a verified, secure, and AI-monitored ecosystem.</p>
+      
+      <div class="hero-actions">
+        <a href="https://youtu.be/BQKnGp2xbpQ?si=Xm4S1C8BtfiNWatv" class="btn btn-primary">Watch Demo</a>
+        <a href="https://docs.google.com/presentation/d/1PVDUJvIzEbf05DTWiGbctwbMiIWvva4poqGv_hdz6sw/edit?usp=sharing" class="btn btn-outline">View Pitch Deck</a>
+      </div>
+
+      <div style="margin-top: 32px; display: flex; gap: 24px;">
+        <div>
+          <h4 style="font-size: 24px; color: var(--text-main)">MVP</h4>
+          <span class="muted" style="font-size: 13px;">Ready for Beta</span>
+        </div>
+        <div style="width: 1px; background: var(--glass-border);"></div>
+        <div>
+          <h4 style="font-size: 24px; color: var(--text-main)">Trust</h4>
+          <span class="muted" style="font-size: 13px;">KYC Verified</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-mockup">
+      <div class="phone-frame">
+        <div class="app-screen">
+          <div class="app-content">
+            <div class="app-header-row">
+              <div class="back-btn-icon">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+              </div>
+              <div class="app-title">Account</div>
+            </div>
+
+            <div class="profile-section">
+              <div class="profile-avatar">
+                <svg width="35" height="18" viewBox="0 0 40 20">
+                   <path d="M5 15 Q 20 5 35 15" stroke="#e95632" stroke-width="3" fill="none" />
+                   <circle cx="12" cy="15" r="3" fill="#e95632" />
+                   <circle cx="20" cy="13" r="3" fill="#f4a226" />
+                   <circle cx="28" cy="15" r="3" fill="#e95632" />
+                </svg>
+                <div style="margin-top:2px;">SHAANKO</div>
+              </div>
+              <div class="profile-info">
+                <h2>Rabbi Hasan</h2>
+                <div class="status-row">
+                   <div class="not-verified">
+                     <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12">
+                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                     </svg>
+                     <span>Not Fully Verified</span>
+                   </div>
+                </div>
+                <div class="verification-icons">
+                  <div class="v-item red">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+                    <span>Phone</span>
+                  </div>
+                  <div class="v-item green">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <span>E-MAIL</span>
+                  </div>
+                  <div class="v-item green">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <span>KYC</span>
+                  </div>
+                </div>
+                <div class="rec-row">
+                  <div style="color: #3b82f6; display:flex; gap:2px; font-weight:600;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg>
+                    <span>92%</span>
+                  </div>
+                  <span>Recommendation</span>
+                </div>
+                <div style="font-size:10px; color:#9ca3af; margin-top:2px;">Joined: 2025-10-30</div>
+              </div>
+            </div>
+
+            <div class="app-actions">
+              <button class="app-btn app-btn-dash">Dashboard</button>
+              <button class="app-btn app-btn-set">Settings</button>
+            </div>
+
+            <div class="green-card">
+              <div class="gc-left">
+                <div class="swap-icon-circle">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="20" height="20">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                </div>
+                <div class="gc-text">
+                  <h3>17</h3>
+                  <span>Trade Completed</span>
+                </div>
+              </div>
+              <div style="color:#374151">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-box">
+                <h4>6</h4>
+                <span>Sold</span>
+              </div>
+              <div class="stat-box">
+                <h4>11</h4>
+                <span>Bought</span>
+              </div>
+              <div class="stat-box">
+                <h4>2</h4>
+                <span>Ongoing</span>
+              </div>
+            </div>
+
+            <div style="padding-top:10px;">
+                <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:10px;">
+                  <div>Ad views (This week)</div>
+                  <div>0</div>
+                </div>
+                <div style="height:80px; border-bottom:1px solid #e5e7eb; position:relative;">
+                  <span style="font-size:10px; color:#9ca3af; position:absolute; top:20px;">10</span>
+                </div>
+             </div>
+
+          </div>
+
+          <div class="app-nav-bar">
+            <div class="app-nav-item">
+               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+               <span>Home</span>
+            </div>
+            <div class="app-nav-item">
+               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+               <span>Chat</span>
+            </div>
+            <div class="app-nav-item">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+              <span>Notification</span>
+            </div>
+            <div class="app-nav-item active">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+              <span>Profile</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="mission">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">The Ecosystem</div>
+      <h2>Bridging the Gap</h2>
+    </div>
+
+    <div class="bento-grid">
+      <div class="card" style="border-left: 4px solid #ef4444;">
+        <h3>The Problem</h3>
+        <p class="muted" style="margin-top:12px">
+          The digital goods market in Bangladesh is currently the "Wild West." 
+          Trades happen in informal Facebook groups and WhatsApp chats. 
+          The result? Constant scams, zero accountability, and honest sellers struggling to build a reputation.
+        </p>
+      </div>
+
+      <div class="card solution-card" style="border-left: 4px solid var(--accent);">
+        <h3>The Shaanko Solution</h3>
+        <p class="muted" style="margin-top:12px">
+          We built the infrastructure for trust. Shaanko acts as the escrow and validator.
+        </p>
+        <ul class="feature-list" style="margin-top:16px;">
+          <li>Mandatory e-KYC Verification for Sellers</li>
+          <li>Secure Payment Escrow System</li>
+          <li>Delivery Confirmation Logic</li>
+          <li>AI-Driven Fraud Pattern Detection</li>
+        </ul>
+      </div>
+
+      <div class="card users-card bento-full">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+          <div>
+            <h3>Target Users</h3>
+            <p class="muted">Focusing on the digital-native generation of Bangladesh.</p>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <span style="background:rgba(255,255,255,0.05); padding:8px 16px; border-radius:8px; font-size:14px;">Gamers</span>
+            <span style="background:rgba(255,255,255,0.05); padding:8px 16px; border-radius:8px; font-size:14px;">Content Creators</span>
+            <span style="background:rgba(255,255,255,0.05); padding:8px 16px; border-radius:8px; font-size:14px;">Freelancers</span>
+            <span style="background:rgba(255,255,255,0.05); padding:8px 16px; border-radius:8px; font-size:14px;">Digital Resellers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="revenue">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">Monetization</div>
+      <h2>Business Model</h2>
+    </div>
+    
+    <div class="card">
+      <table class="revenue-table">
+        <tbody>
+          <tr>
+            <td>Transaction Fee</td>
+            <td><strong>$0.5 – $1</strong> per successful order (Standard Platform Fee)</td>
+          </tr>
+          <tr>
+            <td>Ad Boosting</td>
+            <td><strong>$1 – $20</strong> per promoted listing (Visibility & Time based)</td>
+          </tr>
+          <tr>
+            <td>Premium Seller Sub</td>
+            <td><strong>$5 – $20</strong>/month for advanced analytics & merchant tools</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">Development</div>
+      <h2>Progress & Roadmap</h2>
+    </div>
+
+    <div class="roadmap-grid">
+      <div class="card">
+        <h3 style="margin-bottom:24px; color:var(--accent);">Current Progress</h3>
+        
+        <div class="timeline-item">
+          <div style="font-weight:700">MVP Developed</div>
+          <div class="muted">Fully functional Flutter App (Frontend) and Supabase (Backend).</div>
+        </div>
+        
+        <div class="timeline-item">
+          <div style="font-weight:700">Core Identity System</div>
+          <div class="muted">OTP authentication and NID verification flows implemented.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div style="font-weight:700">Manual Payment Beta</div>
+          <div class="muted">System currently handles manual payment verification (Bkash/Nagad) successfully.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:24px; color:var(--secondary);">Future Roadmap</h3>
+        
+        <div class="timeline-item future">
+          <div style="font-weight:700">Private Beta Launch</div>
+          <div class="muted">Onboarding 100 vetted sellers to test transaction volume and edge cases.</div>
+        </div>
+
+        <div class="timeline-item future">
+          <div style="font-weight:700">Payment Gateway Automation</div>
+          <div class="muted">Integration with SSLCOMMERZ for instant settlement.</div>
+        </div>
+
+        <div class="timeline-item future">
+          <div style="font-weight:700">AI Integration</div>
+          <div class="muted">Deploying fraud detection algorithms and personalized recommendation engines.</div>
+        </div>
+        
+        <div class="timeline-item future">
+          <div style="font-weight:700">Public Launch & Marketing</div>
+          <div class="muted">Nationwide campaign targeting gaming communities.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="founders">
+  <div class="container">
+    <div class="section-header">
+      <div class="badge">Leadership</div>
+      <h2>The Team</h2>
+    </div>
+
+    <div class="founders-grid">
+      <div class="card founder-card">
+        <img src="Rabbi Hasan.jpg" alt="Founder Portrait" class="avatar">
+        <div>
+          <h3 style="font-size:18px;">Rabbi Hasan</h3>
+          <div style="color:var(--primary); font-size:13px; font-weight:700; margin-bottom:6px;">Founder & CEO</div>
+          <p class="muted" style="font-size:13px; line-height:1.4">Product Lead, UI/UX & Full-Stack Developer. The visionary behind the project.</p>
+          <div style="margin-top:12px; font-size:13px; opacity:0.7">rabbihasan3.1416@gmail.com</div>
+          
+          
+          <a href="https://www.linkedin.com/in/rabbi-hasan-5917a3370" target="_blank" class="linkedin-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+            </svg>
+            Connect
+          </a>
+        </div>
+      </div>
+
+      <div class="card founder-card">
+        <img src="Maruf Hasan.jpg" alt="Co-Founder Portrait" class="avatar">
+        <div>
+          <h3 style="font-size:18px;">Maruf Hasan Sifat</h3>
+          <div style="color:var(--accent); font-size:13px; font-weight:700; margin-bottom:6px;">Co-Founder & CMO</div>
+          <p class="muted" style="font-size:13px; line-height:1.4">Marketing Strategist & Growth Lead. Focused on community building.</p>
+          <div style="margin-top:12px; font-size:13px; opacity:0.7">marufhasansifat537@gmail.com</div>
+
+          <a href="https://www.linkedin.com/in/maruf-hasan-7848b72ab" target="_blank" class="linkedin-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+            </svg>
+            Connect
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-bottom: 120px;">
+  <div class="container">
+    <div class="card contact-box">
+      <h2>Ready to shape the future?</h2>
+      <p class="muted" style="margin-bottom:32px;">
+        Whether you are an investor, a potential partner, or a beta tester, we'd love to hear from you.
+      </p>
+      
+      <a href="mailto:rabbihasan3.1416@gmail.com" class="btn btn-primary" style="font-size:18px; padding: 16px 32px;">
+        Send Mail
+        <svg style="margin-left:10px; width:20px; height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid var(--glass-border); padding:40px 0; text-align:center;">
+  <div class="container">
+    <div class="muted" style="font-size:13px;">Created by Md. Rabbi Hasan. Founder & CEO of Shaanko.<br> &copy; 2026 Shaanko Ltd. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
